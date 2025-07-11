@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendly Text Summarizer</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {# Using the fonts from the "Warm & Welcoming Minimalist Design" #}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Define your keyframes here, as they cannot be inline */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px); /* Start 50px above */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0); /* End at normal position */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 style="animation: fadeInScale 1.2s ease-out forwards; animation-delay: 0.3s;">Your Friendly Text Summarizer</h1>
+        <h1 id="animated-title" style="
+            font-size: 4rem; 
+            color:#FFA07A; 
+            margin-top: 1rem; 
+            margin-bottom: 0.8rem; 
+            font-weight: 900; 
+            letter-spacing: 0.05em; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2); 
+            animation: slideInFromTop 1s ease-out forwards; 
+            animation-delay: 0.8s;
+        ">Gistify</h1>
+        <p>Get the gist, skip the bulk</p>
+    </header>
+
+    <main class="container">
+        <section class="input-section card">
+            <label for="inputText">Enter Your Text Here</label>
+            <textarea id="inputText" placeholder="Paste your article, document, or notes for a concise summary."></textarea>
+            <button id="clearButton">Clear Text</button>
+            <br></br>
+            {# NEW: Input for number of sentences #}
+            <div class="sentence-count-group">
+                <label for="numSentences">Can I set the number of sentences for the summary?</label>
+                <input type="number" id="numSentences" value="5" min="1" max="20"> {# Default 5, min 1, max 20 #}
+            </div>
+            {# END NEW #}
+
+            <button id="summarizeButton">Summarize Now</button>
+        </section>
+
+        <section class="output-section card">
+            <h2>Summarized Content</h2>
+            <div id="summaryOutput" class="summary-box">
+                <p class="placeholder-text">The summarized content will beautifully appear here.</p>
+            </div>
+            <button id="copyButton" class="copy-button" style="display: none;">Copy Summary</button>
+        </section>
+    </main>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

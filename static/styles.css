@@ -1,0 +1,277 @@
+/* Import Google Fonts - Inter and Open Sans */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap');
+
+:root {
+    --primary-purple: #7F5AF0; /* Medium Purple/Violet */
+    --background-soft: #F0F4F8; /* Very Light Blue-Gray */
+    --card-background: #FFFFFF; /* Pure White */
+    --text-dark: #344E5C; /* Dark Blue-Gray */
+    --text-light: #f5f5f5; /* For text on dark backgrounds */
+    --border-light: #E0E6EE; /* Soft border color */
+    --shadow-gentle: rgba(0, 0, 0, 0.05); /* Very light shadow */
+    --border-radius-large: 16px; /* More rounded corners */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--background-soft);
+    color: var(--text-dark);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-bottom: 2rem; /* Add some space at the bottom */
+}
+
+.header {
+    background: linear-gradient(145deg, var(--primary-purple), #A78BFA); /* Soft gradient */
+    color: var(--text-light);
+    padding: 4rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem; /* Space below header */
+    border-bottom-left-radius: var(--border-radius-large); /* Rounded bottom corners */
+    border-bottom-right-radius: var(--border-radius-large);
+}
+
+.header h1 {
+    font-family: 'Inter', sans-serif; /* Heading font */
+    font-size: 3.2rem;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em; /* Tighter letter spacing */
+}
+
+.header p {
+    font-size: 1.25rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1250px;
+    margin: 1rem auto; /* Adjusted margin */
+    padding: 0 2.5rem;
+    display: flex;
+    gap: 2.5rem; /* Larger gap between sections */
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-grow: 1;
+    align-items: stretch; /* Stretch items to fill height */
+}
+
+.input-section, .output-section {
+    background: var(--card-background);
+    padding: 2.8rem; /* More padding */
+    border-radius: var(--border-radius-large); /* More rounded */
+    box-shadow: 0 8px 20px var(--shadow-gentle); /* Gentle shadow */
+    flex: 1;
+    min-width: 350px; /* Slightly wider min-width */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+    border: 1px solid var(--border-light); /* Subtle border */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* More noticeable lift */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1.2rem; /* More space below label */
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    display: block; /* Ensure label takes full width */
+}
+
+textarea {
+    width: 100%;
+    height: 380px; /* Increased height */
+    padding: 1.2rem;
+    font-size: 1.05rem;
+    border: 1px solid var(--border-light);
+    border-radius: 10px; /* Rounded textarea */
+    resize: vertical;
+    font-family: 'Open Sans', sans-serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    line-height: 1.7;
+    color: var(--text-dark);
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 4px rgba(127, 90, 240, 0.2); /* Purple focus ring */
+}
+
+button {
+    background-color: var(--primary-purple);
+    color: var(--text-light);
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 10px; /* Rounded buttons */
+    cursor: pointer;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 2.5rem; /* More space above button */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: auto;
+    align-self: center; /* Center buttons */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #6a3edf; /* Slightly darker purple on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(0);
+    background-color: #7F5AF0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Output Section Styling */
+.output-section h2 {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.summary-box {
+    background-color: var(--background-soft); /* Lighter background for summary */
+    padding: 1.8rem; /* More padding */
+    border-radius: 10px;
+    min-height: 330px; /* Adjusted min-height */
+    border: 1px solid var(--border-light);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 1rem;
+    color: var(--text-dark);
+    line-height: 1.8;
+    overflow-y: auto;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03); /* Very subtle inner shadow */
+}
+
+.placeholder-text {
+    color: #99AAB5; /* Softer gray */
+    font-style: italic;
+    font-weight: 300;
+}
+
+.copy-button {
+    background-color: #6CC5B3; /* Soft teal for copy button */
+    margin-top: 2.5rem;
+    align-self: center; /* Center copy button */
+}
+
+.copy-button:hover {
+    background-color: #55B7A6; /* Darker teal on hover */
+}
+
+/* Feedback messages from JS */
+.error-message {
+    color: #E74C3C; /* Red */
+    font-weight: 600;
+}
+
+.copy-success-message {
+    color: #2ECC71; /* Green */
+    font-weight: 600;
+}
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .header {
+        padding: 3rem 1rem;
+    }
+
+    .header h1 {
+        font-size: 2.8rem;
+    }
+
+    .container {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0 1.5rem;
+        margin: 1.5rem auto;
+    }
+
+    .input-section, .output-section {
+        padding: 2rem;
+    }
+
+    textarea {
+        height: 250px;
+    }
+
+    .summary-box {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding: 2.5rem 1rem;
+        border-radius: 0; /* Remove rounded corners on very small screens */
+    }
+
+    .header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .input-section, .output-section {
+        padding: 1.5rem;
+        border-radius: var(--border-radius-large);
+    }
+    
+    button {
+        width: 100%;
+        padding: 1.1rem;
+        font-size: 1rem;
+    }
+
+    label {
+        font-size: 1.05rem;
+    }
+
+    .output-section h2 {
+        font-size: 1.6rem;
+    }
+
+    textarea {
+        height: 200px;
+    }
+
+    .summary-box {
+        min-height: 150px;
+    }
+}
+#clearButton {
+    margin-left: 10px;
+    padding: 8px 16px;
+    background-color: #f08080; /* soft coral */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#clearButton:hover {
+    background-color:rgba(197, 19, 197, 0.756);
+}
