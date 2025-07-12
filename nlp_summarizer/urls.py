@@ -8,12 +8,7 @@ from summarizer_app import views # Import your views module
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Map the root URL ('') to your homepage_view
-    path('', views.homepage_view, name='homepage'), # This will serve your index.html
-    # This is the crucial line: Map the API endpoint to '/api/summarize/'
-    path('api/summarize/', views.summarize_text, name='api_summarize') 
+    path('', views.homepage_view, name='homepage'),  # All handled here
 ]
 
 # This is essential for serving static files in development
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
