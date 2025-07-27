@@ -5,26 +5,28 @@ import nltk
 from nltk.tokenize import sent_tokenize
 from transformers import pipeline
 
-# --- Ensure NLTK tokenizer is available ---
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
+# --- Lazy-load summarizer pipeline ---
+summarizer = None
 
-# --- Load summarization pipeline once on server start ---
-print("Loading Hugging Face summarization model (facebook/bart-large-cnn)...")
-try:
-    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-    print("Model loaded successfully.")
-except Exception as e:
-    print(f"Model load error: {e}")
-    summarizer = None
+def get_summarizer():
+    global summarizer
+    if summarizer is None:
+        print("Loading Hugging Face summarization model (facebook/bart-large-cnn)...")
+        try:
+            summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+            print("Model loaded successfully.")
+        except Exception as e:
+            print(f"Model load error: {e}")
+            return None
+    return summarizer
 
 def homepage_view(request):
     if request.method == 'POST':
         is_json = request.headers.get('Content-Type', '').startswith('application/json')
 
-        if summarizer is None:
+        # Load summarizer when needed
+        model = get_summarizer()
+        if model is None:
             error_msg = 'Summarization model not loaded.'
             return JsonResponse({'error': error_msg}, status=500) if is_json else render(request, 'index.html', {'error': error_msg})
 
@@ -54,7 +56,7 @@ def homepage_view(request):
         max_tokens = num_sentences * 30 + 50
 
         try:
-            output = summarizer(text_to_summarize, max_length=max_tokens, min_length=min_tokens, do_sample=False)
+            output = model(text_to_summarize, max_length=max_tokens, min_length=min_tokens, do_sample=False)
             summary_text = output[0]['summary_text']
             final_summary = ' '.join(sent_tokenize(summary_text)[:num_sentences])
             return JsonResponse({'summary': final_summary}) if is_json else render(request, 'index.html', {

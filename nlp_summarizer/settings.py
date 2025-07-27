@@ -4,14 +4,19 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'your-default-secret-key')  # Best to set via environment
+# Use environment variable for secret key — fail if not set
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
+# DEBUG mode controlled via environment variable (default to False)
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
 
-# Allow hosts - replace '*' with your Render app URL for better security in production
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+# More restrictive ALLOWED_HOSTS for production security
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+
+if 'RENDER_SERVICE_URL' in os.environ:
+    allowed_host = os.environ['RENDER_SERVICE_URL'].replace('https://', '').replace('http://', '').strip('/')
+    ALLOWED_HOSTS.append(allowed_host)
 
 # Application definition
 INSTALLED_APPS = [
@@ -55,13 +60,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nlp_summarizer.wsgi.application'
 
-# Database
-# Use dj-database-url to support deployment on Render with PostgreSQL
+# Database configuration using dj-database-url with SQLite fallback
 DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
-        ssl_require=False
+        ssl_require=os.environ.get('DB_SSL_REQUIRE', 'False').lower() == 'true',
     )
 }
 
@@ -82,7 +86,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
-# Default primary key field type
+# Security settings for production (set to True when going live)
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
