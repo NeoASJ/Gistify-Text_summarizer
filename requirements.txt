@@ -2,3 +2,6 @@ Django==4.2.3
 gunicorn==21.2.0
 transformers==4.41.1
 nltk==3.8.1
+dj-database-url
+whitenoise
+psycopg2-binary
